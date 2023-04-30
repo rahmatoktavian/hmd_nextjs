@@ -1,5 +1,10 @@
-import '@/styles/globals.css'
+import React from 'react';
+import { Button } from 'antd';
 
-export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />
-}
+export default function BookIndex() {
+  return (
+    <>
+      <Button type="primary">Primary Button</Button>
+    </>
+  )
+};
