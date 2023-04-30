@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { Form, Button, Input } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
-export default function BookInset() {
+export default function BookInsert() {
   const router = useRouter();
 
   return (
