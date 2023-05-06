@@ -7,7 +7,7 @@ export default function BookInsert() {
 
   return (
     <>
-      <Button onClick={() => router.push('/book')} icon={<ArrowLeftOutlined />} style={{marginBottom:20}}>Back</Button>
+      <Button onClick={() => router.push('/kategori')} icon={<ArrowLeftOutlined />} style={{marginBottom:20}}>Back</Button>
 
       <Form
         name="book_insert"
@@ -15,7 +15,7 @@ export default function BookInsert() {
         onFinish={() => router.push('/book')}
        
       >
-        <Form.Item label="Name">
+        <Form.Item label="Nama">
           <Input value="" />
         </Form.Item>
 
