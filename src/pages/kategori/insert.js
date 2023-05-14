@@ -22,7 +22,7 @@ export default function KategoriInsert() {
                               .insert({ nama:input.nama });
 
     //display message
-    messageApi.success('Data berhasil disimpan', 1.5)
+    messageApi.success('Data berhasil disimpan', 1)
     .then(() => router.push('/kategori'));
   }
 
@@ -43,7 +43,7 @@ export default function KategoriInsert() {
           name="nama"
           rules={[{ required: true }]}
         >
-          <Input value="" />
+          <Input />
         </Form.Item>
 
         <Form.Item>
