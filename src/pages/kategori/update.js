@@ -7,9 +7,6 @@ import { supabase } from '../../config/supabase';
 export default function KategoriUpdate() {
   //calling message library
   const [messageApi, messageApiDisplay] = message.useMessage();
-  
-  //state for input text
-  const [inputData, setInputData] = useState([]);
 
   //route for page movemenet
   const router = useRouter();
