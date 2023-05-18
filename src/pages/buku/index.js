@@ -22,7 +22,8 @@ export default function BukuIndex() {
     const { data, error } = await supabase
                               .from('buku')
                               .select('id, judul, stok, kategori(nama)');
-   
+    
+    //looping untuk reformat data
     let result = [];
     data.map(row =>
       result.push({
@@ -32,6 +33,8 @@ export default function BukuIndex() {
         stok: row.stok,
       })
     )
+
+    //insert data table
     setDataTable(result);
   }
 

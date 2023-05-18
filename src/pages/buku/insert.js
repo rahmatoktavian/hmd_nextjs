@@ -27,8 +27,7 @@ export default function BukuInsert() {
     const { data, error } = await supabase
                               .from('kategori')
                               .select('id, nama');
-   
-                        
+    console.log(data)      
     let result = [];
     data.map(row =>
       result.push({
@@ -36,6 +35,8 @@ export default function BukuInsert() {
         label: row.nama,
       })
     )
+    
+    //insert data state select/dropdown
     setKategoriData(result);
   }
 
@@ -45,7 +46,7 @@ export default function BukuInsert() {
     const { data, error } = await supabase
                               .from('buku')
                               .insert({ 
-                                kategori_id:input.kategori,
+                                kategori_id:input.kategori_id,
                                 judul:input.judul,
                                 stok:input.stok,
                               });
@@ -69,7 +70,7 @@ export default function BukuInsert() {
       >
         <Form.Item 
           label="Kategori" 
-          name="kategori"
+          name="kategori_id"
           rules={[{ required: true }]}
         >
           <Select

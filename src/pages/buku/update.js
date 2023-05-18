@@ -40,6 +40,8 @@ export default function BukuUpdate() {
         label: row.nama,
       })
     )
+
+    //insert data state select/dropdown
     setKategoriData(result);
   }
 
@@ -52,9 +54,10 @@ export default function BukuUpdate() {
                               .select('id, kategori_id, judul, stok')
                               .eq('id', id)
                               .single();
-                      
+                              
+    //insert data input & dropdown        
     form.setFieldsValue({ 
-      kategori: data.kategori_id,
+      kategori_id: data.kategori_id,
       judul: data.judul, 
       stok: data.stok, 
     });
@@ -66,7 +69,7 @@ export default function BukuUpdate() {
     const { data, error } = await supabase
                               .from('buku')
                               .update({ 
-                                kategori_id:input.kategori,
+                                kategori_id:input.kategori_id,
                                 judul:input.judul,
                                 stok:input.stok,
                               })
@@ -103,7 +106,7 @@ export default function BukuUpdate() {
       >
         <Form.Item 
           label="Kategori" 
-          name="kategori"
+          name="kategori_id"
           rules={[{ required: true }]}
         >
           <Select
