@@ -33,7 +33,7 @@ export default function KategoriInsert() {
       <Button onClick={() => router.push('/kategori')} icon={<ArrowLeftOutlined />} style={{marginBottom:20}}>Back</Button>
 
       <Form
-        name="book_insert"
+        name="insert"
         layout="vertical"
         onFinish={saveData}
         form={form}

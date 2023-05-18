@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Form, Button, Input, message, Popconfirm } from 'antd';
+import { Form, Button, Input, Select, message, Popconfirm } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { supabase } from '../../config/supabase';
 
-export default function KategoriUpdate() {
+export default function BukuUpdate() {
   //calling message library
   const [messageApi, messageApiDisplay] = message.useMessage();
-
+  
   //route for page movemenet
   const router = useRouter();
 
@@ -16,24 +16,47 @@ export default function KategoriUpdate() {
 
   //form data
   const [form] = Form.useForm();
-  
+
+  //state for kategori
+  const [kategoriData, setKategoriData] = useState([]);
+
   //initial function (first function will run in this page)
   useEffect(() => {
+    getKategori();
     getDataDetail();
   }, []);
+
+  //get data kategori
+  const getKategori = async() => {
+    const { data, error } = await supabase
+                              .from('kategori')
+                              .select('id, nama');
+   
+                        
+    let result = [];
+    data.map(row =>
+      result.push({
+        value: row.id,
+        label: row.nama,
+      })
+    )
+    setKategoriData(result);
+  }
 
   //get choosen data
   const getDataDetail = async() => {
 
     //select based on id
     const { data, error } = await supabase
-                              .from('kategori')
-                              .select('id, nama')
+                              .from('buku')
+                              .select('id, kategori_id, judul, stok')
                               .eq('id', id)
                               .single();
                       
     form.setFieldsValue({ 
-      nama: data.nama 
+      kategori: data.kategori_id,
+      judul: data.judul, 
+      stok: data.stok, 
     });
   }
 
@@ -41,42 +64,64 @@ export default function KategoriUpdate() {
   const saveData = async(input) => {
     //update data
     const { data, error } = await supabase
-                              .from('kategori')
-                              .update({ nama:input.nama })
+                              .from('buku')
+                              .update({ 
+                                kategori_id:input.kategori,
+                                judul:input.judul,
+                                stok:input.stok,
+                              })
                               .eq('id', id);
 
     //display message
     messageApi.success('Data berhasil disimpan', 1)
-    .then(() => router.push('/kategori'));
+    .then(() => router.push('/buku'));
   }
 
   //delete data
   const deleteData = async() => {
     const { data, error } = await supabase
-                              .from('kategori')
+                              .from('buku')
                               .delete()
                               .eq('id', id);
 
     //display message
     messageApi.success('Data berhasil dihapus', 1)
-    .then(() => router.push('/kategori'));
+    .then(() => router.push('/buku'));
   }
 
   return (
     <>
       {messageApiDisplay}
 
-      <Button onClick={() => router.push('/kategori')} icon={<ArrowLeftOutlined />} style={{marginBottom:20}}>Back</Button>
+      <Button onClick={() => router.push('/buku')} icon={<ArrowLeftOutlined />} style={{marginBottom:20}}>Back</Button>
 
       <Form
-        name="update"
+        name="insert"
         layout="vertical"
         onFinish={saveData}
         form={form}
       >
         <Form.Item 
-          label="Nama" 
-          name="nama"
+          label="Kategori" 
+          name="kategori"
+          rules={[{ required: true }]}
+        >
+          <Select
+            options={kategoriData}
+          />
+        </Form.Item>
+
+        <Form.Item 
+          label="Judul" 
+          name="judul"
+          rules={[{ required: true }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item 
+          label="Stok" 
+          name="stok"
           rules={[{ required: true }]}
         >
           <Input />
@@ -86,6 +131,7 @@ export default function KategoriUpdate() {
           <Button type="primary" htmlType="submit">
             Save
           </Button>
+
           <Popconfirm
             title="Hapus data"
             description="Apakah anda yakin?"

@@ -1,5 +1,6 @@
-import Head from 'next/head'
-import { ConfigProvider, Layout, Space } from 'antd';
+import { useRouter } from 'next/router'
+import { ConfigProvider, Layout, Space, Menu } from 'antd';
+import { SettingOutlined } from '@ant-design/icons';
 
 //theme
 const { Header, Footer, Sider, Content } = Layout;
@@ -14,7 +15,6 @@ const contentStyle = {
   backgroundColor: '#fff',
 };
 const siderStyle = {
-  textAlign: 'center',
   lineHeight: '120px',
   backgroundColor: '#f5f5f5',
 };
@@ -23,7 +23,35 @@ const footerStyle = {
   backgroundColor: '#f5f5f5',
 };
 
+//menu item
+function getItem(label, key, icon, children, type) {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  };
+}
+
+const menuItem = [
+  getItem('Setting', 'setting', <SettingOutlined />, [
+    getItem('Kategori', 'kategori'),
+    getItem('Buku', 'buku'),
+  ]),
+  {
+    type: 'divider',
+  },
+];
+
 export default function App({ Component, pageProps }) {
+  const router = useRouter();
+
+  const onClick = (menuData) => {
+    let page = menuData.key;
+    router.push('/'+page);
+  };
+
   return (
     <ConfigProvider
       theme={{
@@ -34,9 +62,17 @@ export default function App({ Component, pageProps }) {
     >
       <Space direction="vertical" style={{ width: '100%' }} size={[0, 48]}>
         <Layout>
-          <Sider style={siderStyle}>Sidebar</Sider>
+          <Header style={headerStyle}>Header</Header>
           <Layout>
-            <Header style={headerStyle}>Header</Header>
+            <Sider style={siderStyle}>
+              <Menu
+                onClick={onClick}
+                defaultOpenKeys={['setting']}
+                defaultSelectedKeys={['kategori']}
+                mode="inline"
+                items={menuItem}
+              />
+            </Sider>
             <Content style={contentStyle}><Component {...pageProps} /></Content>
           </Layout>
         </Layout>
