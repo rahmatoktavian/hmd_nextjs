@@ -1,0 +1,119 @@
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { Form, Button, Input, Select, message, DatePicker } from 'antd';
+import { ArrowLeftOutlined } from '@ant-design/icons';
+import { supabase } from '../../config/supabase';
+
+export default function PeminjamanBukuInsert() {
+  //calling message library
+  const [messageApi, messageApiDisplay] = message.useMessage();
+  
+  //route for page movemenet
+  const router = useRouter();
+
+  //get id in URL (peminjaman_id)
+  const peminjaman_id = router.query.peminjaman_id;
+
+  //form data
+  const [form] = Form.useForm();
+
+  //state for kategori
+  const [peminjamanBukuData, setPeminjamanBukuData] = useState([]);
+  const [bukuData, setBukuData] = useState([]);
+
+  useEffect(() => {
+    // getPeminjamanBuku();
+    getBuku();
+  }, []);
+
+  //get data buku already inserted to peminjaman_buku
+  const getPeminjamanBuku = async() => {
+    const { data, error } = await supabase
+                              .from('peminjaman_buku')
+                              .select('buku_id')
+                              .eq('peminjaman_id', peminjaman_id);
+    
+    let result = [];
+    data.map(row =>
+      result.push(row.buku_id)
+    )
+    setPeminjamanBukuData(result);
+  }
+
+  //get data buku
+  const getBuku = async() => {
+      // const { data:dataPeminjamanBuku } = await supabase
+      //                           .from('peminjaman_buku')
+      //                           .select('buku_id')
+      //                           .eq('peminjaman_id', peminjaman_id);
+      
+      // let listPeminjamanBuku = [];
+      // dataPeminjamanBuku.map(row =>
+      //   listPeminjamanBuku.push(row.buku_id)
+      // )
+      
+      console.log(listPeminjamanBuku)
+      const { data, error } = await supabase
+                                .from('buku')
+                                .select('id, judul')
+      
+      let result = [];
+      data.map(row =>
+        result.push({
+          value: row.id,
+          label: row.judul,
+        })
+      )
+      
+      //insert data state select/dropdown
+      setBukuData(result);
+  }
+
+  //insert data after button submitted
+  const saveData = async(input) => {
+    //insert data
+    const { data, error } = await supabase
+                              .from('peminjaman_buku')
+                              .insert({ 
+                                peminjaman_id:peminjaman_id,
+                                buku_id:input.buku_id,
+                              });
+
+    
+
+    //display message (return to peminjaman_buku bring peminjaman_id)
+    messageApi.success('Data berhasil disimpan', 1)
+    .then(() => router.push('/peminjaman_buku?peminjaman_id='+peminjaman_id));
+  }
+
+  return (
+    <>
+      {messageApiDisplay}
+
+      <Button onClick={() => router.push('/peminjaman_buku?peminjaman_id='+peminjaman_id)} icon={<ArrowLeftOutlined />} style={{marginBottom:20}}>Back</Button>
+
+      <Form
+        name="insert"
+        layout="vertical"
+        onFinish={saveData}
+        form={form}
+      >
+        <Form.Item 
+          label="Buku" 
+          name="buku_id"
+          rules={[{ required: true }]}
+        >
+          <Select
+            options={bukuData}
+          />
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Save
+          </Button>
+        </Form.Item>
+      </Form>
+    </>
+  )
+}

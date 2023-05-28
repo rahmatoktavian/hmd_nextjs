@@ -4,7 +4,7 @@ import { Form, Button, Input, Select, message, DatePicker } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { supabase } from '../../config/supabase';
 
-export default function BukuInsert() {
+export default function PeminjamanInsert() {
   //calling message library
   const [messageApi, messageApiDisplay] = message.useMessage();
   
@@ -18,46 +18,46 @@ export default function BukuInsert() {
   const [PetugasData, setPetugasData] = useState([]);
   const [AnggotaData, setAnggotaData] = useState([]);
 
-useEffect(() => {
+  useEffect(() => {
     getPetugas();
     getAnggota();
   }, []);
 
-    //get data petugas
-    const getPetugas = async() => {
-        const { data, error } = await supabase
-                                  .from('petugas')
-                                  .select('id, nama');
-        console.log(data)      
-        let result = [];
-        data.map(row =>
-          result.push({
-            value: row.id,
-            label: row.nama,
-          })
-        )
-        
-        //insert data state select/dropdown
-        setPetugasData(result);
-      }
+  //get data petugas
+  const getPetugas = async() => {
+      const { data, error } = await supabase
+                                .from('petugas')
+                                .select('id, nama');
+      console.log(data)      
+      let result = [];
+      data.map(row =>
+        result.push({
+          value: row.id,
+          label: row.nama,
+        })
+      )
+      
+      //insert data state select/dropdown
+      setPetugasData(result);
+    }
     
-        //get data petugas
-        const getAnggota = async() => {
-            const { data, error } = await supabase
-                                      .from('anggota')
-                                      .select('id, nim, nama');
-            console.log(data)      
-            let result = [];
-            data.map(row =>
-              result.push({
-                value: row.id,
-                label: row.nama,
-              })
-            )
-            
-            //insert data state select/dropdown
-            setAnggotaData(result);
-          }
+  //get data petugas
+  const getAnggota = async() => {
+    const { data, error } = await supabase
+                              .from('anggota')
+                              .select('id, nim, nama');
+    console.log(data)      
+    let result = [];
+    data.map(row =>
+      result.push({
+        value: row.id,
+        label: row.nama,
+      })
+    )
+    
+    //insert data state select/dropdown
+    setAnggotaData(result);
+  }
 
   //insert data after button submitted
   const saveData = async(input) => {

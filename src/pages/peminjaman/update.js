@@ -5,7 +5,7 @@ import { ArrowLeftOutlined } from '@ant-design/icons';
 import { supabase } from '../../config/supabase';
 import dayjs from 'dayjs';
 
-export default function BukuUpdate() {
+export default function PeminjamanUpdate() {
   //calling message library
   const [messageApi, messageApiDisplay] = message.useMessage();
   
