@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 import { Button, List, Table } from 'antd';
-import { UserOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, UserOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 import { supabase } from '../../config/supabase';
 
 export default function PeminjamanBukuIndex() {
@@ -17,12 +17,12 @@ export default function PeminjamanBukuIndex() {
 
   //initial function (first function will run in this page)
   useEffect(() => {
-    getDataPeminjaman();
-    getDataBuku();
+    getDetailPeminjaman();
+    getDataPeminjamanBuku();
   }, []);
 
-  //get data buku
-  const getDataPeminjaman = async() => {
+  //get detail peminjaman (header)
+  const getDetailPeminjaman = async() => {
     const { data, error } = await supabase
                               .from('peminjaman')
                               .select('id, tanggal_pinjam, petugas(nama), anggota(nim,nama)')
@@ -32,8 +32,8 @@ export default function PeminjamanBukuIndex() {
     setPeminjamanData(data);
   }
 
-  //get data buku
-  const getDataBuku = async() => {
+  //get data peminjaman buku (table)
+  const getDataPeminjamanBuku = async() => {
     const { data, error } = await supabase
                               .from('peminjaman_buku')
                               .select('id, buku(judul)')
@@ -56,7 +56,7 @@ export default function PeminjamanBukuIndex() {
   const tableColumn = [
 
     {
-        title: 'Buku',
+        title: 'Judul Buku',
         dataIndex: 'judul',
         key: 'judul',
         sorter: (a, b) => a.judul.localeCompare(b.judul),
@@ -73,6 +73,8 @@ export default function PeminjamanBukuIndex() {
   //display data
   return (
     <>
+      <Button onClick={() => router.push('/peminjaman')} icon={<ArrowLeftOutlined />} style={{marginBottom:20}}>Back</Button>
+
       <List
         itemLayout="horizontal"
         dataSource={peminjamanData}
@@ -88,7 +90,7 @@ export default function PeminjamanBukuIndex() {
         )}
       />
 
-      <Button type="primary" onClick={() => router.push('/peminjaman_buku/insert/?peminjaman_id='+peminjaman_id)} icon={<PlusOutlined />} style={{marginBottom:10, marginTop:10}}>Tambah</Button>
+      <Button type="primary" onClick={() => router.push('/peminjaman_buku/insert/?peminjaman_id='+peminjaman_id)} icon={<PlusOutlined />} style={{marginBottom:10, marginTop:10}}>Tambah Buku</Button>
 
       <Table columns={tableColumn} dataSource={tableData} />
     </>

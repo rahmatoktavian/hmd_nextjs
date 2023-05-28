@@ -22,37 +22,11 @@ export default function PeminjamanBukuInsert() {
   const [bukuData, setBukuData] = useState([]);
 
   useEffect(() => {
-    // getPeminjamanBuku();
     getBuku();
   }, []);
 
-  //get data buku already inserted to peminjaman_buku
-  const getPeminjamanBuku = async() => {
-    const { data, error } = await supabase
-                              .from('peminjaman_buku')
-                              .select('buku_id')
-                              .eq('peminjaman_id', peminjaman_id);
-    
-    let result = [];
-    data.map(row =>
-      result.push(row.buku_id)
-    )
-    setPeminjamanBukuData(result);
-  }
-
   //get data buku
   const getBuku = async() => {
-      // const { data:dataPeminjamanBuku } = await supabase
-      //                           .from('peminjaman_buku')
-      //                           .select('buku_id')
-      //                           .eq('peminjaman_id', peminjaman_id);
-      
-      // let listPeminjamanBuku = [];
-      // dataPeminjamanBuku.map(row =>
-      //   listPeminjamanBuku.push(row.buku_id)
-      // )
-      
-      console.log(listPeminjamanBuku)
       const { data, error } = await supabase
                                 .from('buku')
                                 .select('id, judul')
@@ -68,6 +42,17 @@ export default function PeminjamanBukuInsert() {
       //insert data state select/dropdown
       setBukuData(result);
   }
+
+  // const checkBuku = async(buku_id) => {
+  //   const { data } = await supabase
+  //                               .from('peminjaman_buku')
+  //                               .select('id')
+  //                               .eq('peminjaman_id', peminjaman_id)
+  //                               .eq('buku_id', buku_id);
+  //   if(data) {
+
+  //   }
+  // };
 
   //insert data after button submitted
   const saveData = async(input) => {
@@ -105,6 +90,7 @@ export default function PeminjamanBukuInsert() {
         >
           <Select
             options={bukuData}
+            // onChange={checkBuku}
           />
         </Form.Item>
 

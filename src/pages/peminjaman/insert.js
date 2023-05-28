@@ -118,16 +118,6 @@ export default function PeminjamanInsert() {
           <DatePicker />
         </Form.Item>
 
-        {/* <Form.Item 
-          label="Stok" 
-          name="stok"
-          rules={[{ required: true }]}
-        >
-          <Input />
-
-          
-        </Form.Item> */}
-
         <Form.Item>
           <Button type="primary" htmlType="submit">
             Save
