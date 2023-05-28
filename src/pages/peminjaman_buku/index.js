@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
-import { Button, List, Table } from 'antd';
+import { Button, List, Table, Popconfirm } from 'antd';
 import { ArrowLeftOutlined, UserOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 import { supabase } from '../../config/supabase';
 
@@ -66,9 +66,19 @@ export default function PeminjamanBukuIndex() {
       title: 'Action',
       dataIndex: 'key',
       key: 'key',
-      render: (text) => <Button type="primary" icon={<DeleteOutlined />} onClick={() => alert('Belum ada action')} />,
+      render: (text) => <Popconfirm
+                            title="Hapus data"
+                            description="Apakah anda yakin?"
+                            onConfirm={() => deleteData(text)}
+                        >
+                          <Button type="primary" icon={<DeleteOutlined />}  />
+                        </Popconfirm>,
     },
   ];
+
+  const deleteData = async(id) => {
+    alert(id)
+  }
 
   //display data
   return (
