@@ -18,8 +18,8 @@ export default function PeminjamanBukuInsert() {
   const [form] = Form.useForm();
 
   //state for kategori
-  const [peminjamanBukuData, setPeminjamanBukuData] = useState([]);
   const [bukuData, setBukuData] = useState([]);
+  const [disabledButtonSave, setDisabledButtonSave] = useState(false);
 
   useEffect(() => {
     getBuku();
@@ -43,16 +43,20 @@ export default function PeminjamanBukuInsert() {
       setBukuData(result);
   }
 
-  // const checkBuku = async(buku_id) => {
-  //   const { data } = await supabase
-  //                               .from('peminjaman_buku')
-  //                               .select('id')
-  //                               .eq('peminjaman_id', peminjaman_id)
-  //                               .eq('buku_id', buku_id);
-  //   if(data) {
-
-  //   }
-  // };
+  const checkBuku = async(buku_id) => {
+    const { data, error, count } = await supabase
+                                .from('peminjaman_buku')
+                                .select('id')
+                                .eq('peminjaman_id', peminjaman_id)
+                                .eq('buku_id', buku_id)
+                                .single();
+    if(data) {
+      messageApi.error('Buku sudah ditambahkan, Pilih buku lain');
+      setDisabledButtonSave(true);
+    } else {
+      setDisabledButtonSave(false);
+    }
+  };
 
   //insert data after button submitted
   const saveData = async(input) => {
@@ -63,8 +67,6 @@ export default function PeminjamanBukuInsert() {
                                 peminjaman_id:peminjaman_id,
                                 buku_id:input.buku_id,
                               });
-
-    
 
     //display message (return to peminjaman_buku bring peminjaman_id)
     messageApi.success('Data berhasil disimpan', 1)
@@ -90,12 +92,12 @@ export default function PeminjamanBukuInsert() {
         >
           <Select
             options={bukuData}
-            // onChange={checkBuku}
+            onChange={checkBuku}
           />
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" disabled={disabledButtonSave}>
             Save
           </Button>
         </Form.Item>
