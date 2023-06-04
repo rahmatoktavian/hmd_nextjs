@@ -27,6 +27,8 @@ export default function LaporanTable() {
   useEffect(() => {
     getData();
     getKategori();
+
+  //if any changes state search kategori & judul
   }, [searchKategori, searchJudul]);
 
   //get data using supabase API
@@ -132,7 +134,7 @@ export default function LaporanTable() {
     const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
     const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
     const data = new Blob([excelBuffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8" });
-    FileSaver.saveAs(data, 'buku.xlsx');
+    FileSaver.saveAs(data, 'book.xlsx');
   };
 
 
