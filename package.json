@@ -10,10 +10,14 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
+    "@supabase/auth-helpers-nextjs": "^0.6.1",
+    "@supabase/auth-helpers-react": "^0.3.1",
     "@supabase/supabase-js": "^2.20.0",
     "antd": "^5.4.2",
+    "file-saver": "^2.0.5",
     "next": "13.3.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "xlsx": "^0.18.5"
   }
 }

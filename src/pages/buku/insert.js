@@ -27,7 +27,7 @@ export default function BukuInsert() {
     const { data, error } = await supabase
                               .from('kategori')
                               .select('id, nama');
-    console.log(data)      
+    
     let result = [];
     data.map(row =>
       result.push({

@@ -39,6 +39,11 @@ const menuItem = [
     getItem('Kategori', 'kategori'),
     getItem('Buku', 'buku'),
     getItem('Peminjaman', 'peminjaman'),
+    
+  ]),
+  getItem('Laporan', 'laporan', <SettingOutlined />, [
+    getItem('Detail', 'laporan/detail'),
+    getItem('Summary', 'laporan/summary'),
   ]),
   {
     type: 'divider',
