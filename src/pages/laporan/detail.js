@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router'
 import { Button, Form, Table, Select, Input } from 'antd';
 import { DownloadOutlined, SearchOutlined } from '@ant-design/icons';
 import { supabase } from '../../config/supabase';
@@ -8,10 +7,7 @@ import { supabase } from '../../config/supabase';
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
 
-export default function LaporanTable() {
-  //route
-  const router = useRouter();
-
+export default function LaporanDetail() {
   //form data
   const [form] = Form.useForm();
 
