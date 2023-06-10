@@ -12,20 +12,11 @@ export default function LaporanSummary() {
   }, []);
 
   const getData = async() => {
-    //initial query
+    //calling stored procedure (rpc)
     const { data, error } = await supabase.rpc('rekap_buku');
     
-    //looping untuk reformat data
-    let result = [];
-    data.map(row =>
-      result.push({
-        type: row.kategori_nama,
-        value: row.total_buku,
-      })
-    )
-    
     //set state chartdata
-    setData(result);
+    setData(data);
   }
 
   // original chart data
@@ -47,8 +38,11 @@ export default function LaporanSummary() {
   const config = {
     data,
     appendPadding: 10,
-    angleField: 'value',
-    colorField: 'type',
+
+    //change name type & value based from stored procedure (rpc)
+    angleField: 'total_buku',
+    colorField: 'kategori_nama',
+
     radius: 0.9,
     label: {
       type: 'inner',
