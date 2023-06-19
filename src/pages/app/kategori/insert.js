@@ -2,7 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { Form, Button, Input, message } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
-import { supabase } from '../../config/supabase';
+import { supabase } from '../../../config/supabase';
 
 export default function KategoriInsert() {
   //calling message library
@@ -23,14 +23,14 @@ export default function KategoriInsert() {
 
     //display message
     messageApi.success('Data berhasil disimpan', 1)
-    .then(() => router.push('/kategori'));
+    .then(() => router.push('/app/kategori'));
   }
 
   return (
     <>
       {messageApiDisplay}
 
-      <Button onClick={() => router.push('/kategori')} icon={<ArrowLeftOutlined />} style={{marginBottom:20}}>Back</Button>
+      <Button onClick={() => router.push('/app/kategori')} icon={<ArrowLeftOutlined />} style={{marginBottom:20}}>Back</Button>
 
       <Form
         name="insert"

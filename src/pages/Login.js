@@ -1,35 +1,75 @@
+import React from 'react';
+import { useRouter } from 'next/router';
+import { Row, Col, Typography, Form, Button, Input, message } from 'antd';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
-import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
-import { useEffect, useState } from 'react'
+export default function Login() {
+  //supabase auth
+  const supabase = createClientComponentClient()
 
-const Login = () => {
-  const supabaseClient = useSupabaseClient()
-  const user = useUser()
-  const [data, setData] = useState()
+  //route for page movemenet
+  const router = useRouter();
 
-  useEffect(() => {
-    async function loadData() {
-      const { data } = await supabaseClient.from('test').select('*')
-      setData(data)
+  //form data
+  const [form] = Form.useForm();
+
+  //calling message library
+  const [messageApi, messageApiDisplay] = message.useMessage();
+
+  //login process
+  const onLogin = async(input) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: input.email,
+      password: input.password,
+    })
+
+    //display message
+    if(error) {
+      messageApi.error(error.message, 1);
+    } else {
+      messageApi.success('Berhasil Login', 1);
+      router.push('/app/buku')
     }
-    // Only run query once user is logged in.
-    if (user) loadData()
-  }, [user])
-
-  if (!user)
-    return (
-      <p>Login</p>
-    )
+  }
 
   return (
-    <>
-      <button onClick={() => supabaseClient.auth.signOut()}>Sign out</button>
-      <p>user:</p>
-      <pre>{JSON.stringify(user, null, 2)}</pre>
-      <p>client-side data fetching with RLS</p>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-    </>
+    <Row>
+      {messageApiDisplay}
+
+      <Col span={9}></Col>
+      <Col span={6}>
+        <Form
+          name="login"
+          layout="vertical"
+          onFinish={onLogin}
+          form={form}
+          
+        >
+          <Form.Item 
+            label="Email" 
+            name="email"
+            rules={[{ required: true, type: 'email' }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item 
+            label="Password" 
+            name="password"
+            rules={[{ required: true, min: 6 }]}
+          >
+            <Input.Password />
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" block htmlType="submit">
+              Save
+            </Button>
+          </Form.Item>
+        </Form>
+      </Col>
+      <Col span={9}></Col>
+
+    </Row>
   )
 }
-
-export default Login

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 import { Button, Table } from 'antd';
 import { EditOutlined, PlusOutlined, BookOutlined } from '@ant-design/icons';
-import { supabase } from '../../config/supabase';
+import { supabase } from '../../../config/supabase';
 
 export default function PeminjamanIndex() {
   //route for page movemenet
@@ -72,8 +72,8 @@ export default function PeminjamanIndex() {
       dataIndex: 'key',
       key: 'key',
       render: (text) => <>
-            <Button type="primary" icon={<EditOutlined />} onClick={() => router.push('/peminjaman/update/?id='+text)} />
-            <Button type="primary" icon={<BookOutlined />} onClick={() => router.push('/peminjaman_buku/?peminjaman_id='+text)} style={{marginLeft:10}} />
+            <Button type="primary" icon={<EditOutlined />} onClick={() => router.push('/app/peminjaman/update/?id='+text)} />
+            <Button type="primary" icon={<BookOutlined />} onClick={() => router.push('/app/peminjaman_buku/?peminjaman_id='+text)} style={{marginLeft:10}} />
             </>,
     },
   ];
@@ -81,7 +81,7 @@ export default function PeminjamanIndex() {
   //display data
   return (
     <>
-      <Button type="primary" onClick={() => router.push('/peminjaman/insert')} icon={<PlusOutlined />} style={{marginBottom:10}}>Tambah</Button>
+      <Button type="primary" onClick={() => router.push('/app/peminjaman/insert')} icon={<PlusOutlined />} style={{marginBottom:10}}>Tambah</Button>
       <Table columns={tableColumn} dataSource={tableData} />
     </>
   )

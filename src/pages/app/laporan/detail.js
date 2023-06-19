@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Table, Select, Input } from 'antd';
+import { Button, Form, Table, Select, Input, Spin } from 'antd';
 import { DownloadOutlined, SearchOutlined } from '@ant-design/icons';
-import { supabase } from '../../config/supabase';
+import { supabase } from '../../../config/supabase';
 
 //export excel
 import * as FileSaver from "file-saver";
@@ -14,6 +14,7 @@ export default function LaporanDetail() {
   //data state
   const [tableData, setDataTable] = useState([]);
   const [kategoriData, setKategoriData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   //search state
   const [searchKategori, setSearchKategori] = useState('');
@@ -60,6 +61,8 @@ export default function LaporanDetail() {
       //insert data table
       setDataTable(result);
     }
+
+    setLoading(false)
   }
 
   //when search button clicked
@@ -136,7 +139,7 @@ export default function LaporanDetail() {
 
   //display data
   return (
-    <>
+    <Spin spinning={loading}>
       <Form
         name="search"
         layout="inline"
@@ -172,6 +175,6 @@ export default function LaporanDetail() {
       <Table columns={tableColumn} dataSource={tableData} />
 
       <Button type="primary" onClick={() => exportExcel()} icon={<DownloadOutlined />} style={{backgroundColor:'green'}}> Excel</Button>
-    </>
+    </Spin>
   )
 }

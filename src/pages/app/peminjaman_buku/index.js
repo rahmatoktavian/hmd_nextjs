@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
-import { Button, List, Table, Popconfirm } from 'antd';
+import { Button, List, Table, Popconfirm, Layout } from 'antd';
 import { ArrowLeftOutlined, UserOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
-import { supabase } from '../../config/supabase';
+import { supabase } from '../../../config/supabase';
 
 export default function PeminjamanBukuIndex() {
   //route for page movemenet
@@ -83,7 +83,7 @@ export default function PeminjamanBukuIndex() {
   //display data
   return (
     <>
-      <Button onClick={() => router.push('/peminjaman')} icon={<ArrowLeftOutlined />} style={{marginBottom:20}}>Back</Button>
+      <Button onClick={() => router.push('/app/peminjaman')} icon={<ArrowLeftOutlined />} style={{marginBottom:20}}>Back</Button>
 
       <List
         itemLayout="horizontal"
@@ -100,7 +100,7 @@ export default function PeminjamanBukuIndex() {
         )}
       />
 
-      <Button type="primary" onClick={() => router.push('/peminjaman_buku/insert/?peminjaman_id='+peminjaman_id)} icon={<PlusOutlined />} style={{marginBottom:10, marginTop:10}}>Tambah Buku</Button>
+      <Button type="primary" onClick={() => router.push('/app/peminjaman_buku/insert/?peminjaman_id='+peminjaman_id)} icon={<PlusOutlined />} style={{marginBottom:10, marginTop:10}}>Tambah Buku</Button>
 
       <Table columns={tableColumn} dataSource={tableData} />
     </>

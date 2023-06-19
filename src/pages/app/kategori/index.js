@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 import { Button, Table } from 'antd';
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { supabase } from '../../config/supabase';
+import { supabase } from '../../../config/supabase';
 
 export default function KategoriIndex() {
   //route for page movemenet
@@ -63,14 +63,14 @@ export default function KategoriIndex() {
       title: 'Action',
       dataIndex: 'key',
       key: 'key',
-      render: (text) => <Button type="primary" icon={<EditOutlined />} onClick={() => router.push('/kategori/update/?id='+text)} />,
+      render: (text) => <Button type="primary" icon={<EditOutlined />} onClick={() => router.push('/app/kategori/update/?id='+text)} />,
     },
   ];
 
   //display data
   return (
     <>
-      <Button type="primary" onClick={() => router.push('/kategori/insert')} icon={<PlusOutlined />} style={{marginBottom:10}}>Tambah</Button>
+      <Button type="primary" onClick={() => router.push('/app/kategori/insert')} icon={<PlusOutlined />} style={{marginBottom:10}}>Tambah</Button>
       <Table columns={tableColumn} dataSource={tableData} />
     </>
   )

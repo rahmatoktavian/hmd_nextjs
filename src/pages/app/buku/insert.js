@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Form, Button, Input, Select, message } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
-import { supabase } from '../../config/supabase';
+import { supabase } from '../../../config/supabase';
 
 export default function BukuInsert() {
   //calling message library
@@ -53,14 +53,14 @@ export default function BukuInsert() {
 
     //display message
     messageApi.success('Data berhasil disimpan', 1)
-    .then(() => router.push('/buku'));
+    .then(() => router.push('/app/buku'));
   }
 
   return (
     <>
       {messageApiDisplay}
 
-      <Button onClick={() => router.push('/buku')} icon={<ArrowLeftOutlined />} style={{marginBottom:20}}>Back</Button>
+      <Button onClick={() => router.push('/app/buku')} icon={<ArrowLeftOutlined />} style={{marginBottom:20}}>Back</Button>
 
       <Form
         name="insert"

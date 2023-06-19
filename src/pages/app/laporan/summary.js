@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { supabase } from '../../config/supabase';
+import { supabase } from '../../../config/supabase';
 import { Pie } from '@ant-design/plots';
 
 export default function LaporanSummary() {

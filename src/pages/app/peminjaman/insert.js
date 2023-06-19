@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Form, Button, Input, Select, message, DatePicker } from 'antd';
+import { Form, Button, Select, message, DatePicker } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
-import { supabase } from '../../config/supabase';
+import { supabase } from '../../../config/supabase';
 
 export default function PeminjamanInsert() {
   //calling message library
@@ -75,14 +75,14 @@ export default function PeminjamanInsert() {
 
     //display message
     messageApi.success('Data berhasil disimpan', 1)
-    .then(() => router.push('/peminjaman'));
+    .then(() => router.push('/app/peminjaman'));
   }
 
   return (
     <>
       {messageApiDisplay}
 
-      <Button onClick={() => router.push('/peminjaman')} icon={<ArrowLeftOutlined />} style={{marginBottom:20}}>Back</Button>
+      <Button onClick={() => router.push('/app/peminjaman')} icon={<ArrowLeftOutlined />} style={{marginBottom:20}}>Back</Button>
 
       <Form
         name="insert"

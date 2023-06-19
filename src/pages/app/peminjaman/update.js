@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Form, Button, Input, Select, message, Popconfirm, DatePicker } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
-import { supabase } from '../../config/supabase';
+import { supabase } from '../../../config/supabase';
 import dayjs from 'dayjs';
 
 export default function PeminjamanUpdate() {
@@ -100,7 +100,7 @@ export default function PeminjamanUpdate() {
 
     //display message
     messageApi.success('Data berhasil disimpan', 1)
-    .then(() => router.push('/peminjaman'));
+    .then(() => router.push('/app/peminjaman'));
   }
 
   //delete data
@@ -112,14 +112,14 @@ export default function PeminjamanUpdate() {
 
     //display message
     messageApi.success('Data berhasil dihapus', 1)
-    .then(() => router.push('/peminjaman'));
+    .then(() => router.push('/app/peminjaman'));
   }
 
   return (
     <>
       {messageApiDisplay}
 
-      <Button onClick={() => router.push('/peminjaman')} icon={<ArrowLeftOutlined />} style={{marginBottom:20}}>Back</Button>
+      <Button onClick={() => router.push('/app/peminjaman')} icon={<ArrowLeftOutlined />} style={{marginBottom:20}}>Back</Button>
 
       <Form
         name="insert"
