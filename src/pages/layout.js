@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { ConfigProvider, Layout, Space, Menu, Button, PageHeader } from 'antd';
-import { SettingOutlined } from '@ant-design/icons';
+import { SettingOutlined, FileOutlined } from '@ant-design/icons';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 //theme
@@ -26,31 +26,42 @@ const footerStyle = {
 };
 
 //menu item
-function getItem(label, key, icon, children, type) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-    type,
-  };
-}
-
 const menuItem = [
-  getItem('Setting', 'setting', <SettingOutlined />, [
-    getItem('Kategori', 'app/kategori'),
-    getItem('Buku', 'app/buku'),
-    getItem('Peminjaman', 'app/peminjaman'),
-    
-  ]),
-  getItem('Laporan', 'laporan', <SettingOutlined />, [
-    getItem('Detail', 'app/laporan/detail'),
-    getItem('Summary', 'app/laporan/summary'),
-  ]),
   {
-    type: 'divider',
+    label: 'Setting',
+    key: 'setting',
+    icon: <SettingOutlined />,
+    children: [
+      {
+        label: 'Kategori',
+        key: 'app/kategori'
+      },
+      {
+        label: 'Buku',
+        key: 'app/buku'
+      },
+      {
+        label: 'Peminjaman',
+        key: 'app/peminjaman'
+      }
+    ],
   },
-];
+  {
+    label: 'Laporan',
+    key: 'laporan',
+    icon: <FileOutlined />,
+    children: [
+      {
+        label: 'Detail',
+        key: 'app/laporan/detail'
+      },
+      {
+        label: 'Summary',
+        key: 'app/laporan/summary'
+      }
+    ],
+  }
+]
 
 export default function layout({children}) {
   const supabase = createClientComponentClient()
