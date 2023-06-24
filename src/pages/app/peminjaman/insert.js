@@ -28,7 +28,7 @@ export default function PeminjamanInsert() {
       const { data, error } = await supabase
                                 .from('petugas')
                                 .select('id, nama');
-      console.log(data)      
+  
       let result = [];
       data.map(row =>
         result.push({
@@ -46,7 +46,7 @@ export default function PeminjamanInsert() {
     const { data, error } = await supabase
                               .from('anggota')
                               .select('id, nim, nama');
-    console.log(data)      
+      
     let result = [];
     data.map(row =>
       result.push({

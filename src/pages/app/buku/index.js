@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 import { Button, Table } from 'antd';
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
-// import { supabase } from '../../../config/supabase';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { supabase } from '../../../config/supabase';
+// import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 export default function BukuIndex() {
   //supabase
-  const supabase = createClientComponentClient()
+  // const supabase = createClientComponentClient()
   
   //route for page movemenet
   const router = useRouter();
