@@ -5,13 +5,16 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "prod_start": "NODE_ENV=production node server.js",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/charts": "^1.4.2",
     "@ant-design/icons": "^5.0.1",
-    "@supabase/auth-helpers-nextjs": "^0.6.1",
-    "@supabase/auth-helpers-react": "^0.3.1",
+    "@ant-design/plots": "^1.2.5",
+    "@supabase/auth-helpers-nextjs": "^0.7.2",
+    "@supabase/auth-helpers-react": "^0.4.0",
     "@supabase/supabase-js": "^2.20.0",
     "antd": "^5.4.2",
     "file-saver": "^2.0.5",
