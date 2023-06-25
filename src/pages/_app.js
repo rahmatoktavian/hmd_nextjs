@@ -13,12 +13,12 @@ export default function App({ Component, pageProps }) {
       supabaseClient={supabaseClient}
       initialSession={pageProps.initialSession}
     >
-      {router.pathname != '/login' ?
+      {(router.pathname == '/signin' || router.pathname == '/signup' ) ?
+      <Component {...pageProps} />
+      :
       <Layout>
         <Component {...pageProps} />
       </Layout>
-      :
-      <Component {...pageProps} />
       }
     </SessionContextProvider>
   )

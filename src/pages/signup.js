@@ -1,9 +1,9 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { Row, Col, Typography, Form, Button, Input, message } from 'antd';
+import { Row, Col, Form, Button, Input, message } from 'antd';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
-export default function Login() {
+export default function Singup() {
   //supabase auth
   const supabase = createClientComponentClient()
 
@@ -17,8 +17,9 @@ export default function Login() {
   const [messageApi, messageApiDisplay] = message.useMessage();
 
   //login process
-  const onLogin = async(input) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
+  const onSubmit = async(input) => {
+    messageApi.success('Berhasil Register', 1);
+    const { data, error } = await supabase.auth.signUp({
       email: input.email,
       password: input.password,
     })
@@ -27,8 +28,8 @@ export default function Login() {
     if(error) {
       messageApi.error(error.message, 1);
     } else {
-      messageApi.success('Berhasil Login', 1);
-      router.push('/app/buku')
+      messageApi.success('Berhasil Register, Silahkan Cek Email', 3);
+      router.push('/signin')
     }
   }
 
@@ -39,9 +40,9 @@ export default function Login() {
       <Col span={9}></Col>
       <Col span={6}>
         <Form
-          name="login"
+          name="singup"
           layout="vertical"
-          onFinish={onLogin}
+          onFinish={onSubmit}
           form={form}
           
         >
@@ -63,7 +64,13 @@ export default function Login() {
 
           <Form.Item>
             <Button type="primary" block htmlType="submit">
-              Save
+              Register
+            </Button>
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="default" block onClick={() => router.push('signin')}>
+              Login
             </Button>
           </Form.Item>
         </Form>

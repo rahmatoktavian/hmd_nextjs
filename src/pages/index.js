@@ -16,7 +16,7 @@ export default function Index() {
     if (user.session) {
       router.push('/app/buku')
     } else {
-      router.push('/login')
+      router.push('/signin')
     }
   }
 
