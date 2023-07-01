@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
-import { Button, Table, Image } from 'antd';
+import { Button, Table, Image, Space } from 'antd';
 import { EditOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { supabase } from '../../../config/supabase';
 // import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
@@ -72,18 +72,18 @@ export default function BukuIndex() {
       key: 'cover',
       render: (cover) => cover &&
                             <Image
-                            width={200}
-                            src={cover}
-                          />
+                              width={200}
+                              src={cover}
+                            />
     },
     {
       title: 'Action',
       dataIndex: 'key',
       key: 'key',
-      render: (id) => <>
+      render: (id) => <Space>
                         <Button type="primary" icon={<EditOutlined />} onClick={() => router.push('/app/buku/update/?id='+id)} />
-                        <Button type="primary" icon={<UploadOutlined />} onClick={() => router.push('/app/buku/update_cover/?id='+id)} style={{marginLeft:10}} />
-                      </>,
+                        <Button type="primary" icon={<UploadOutlined />} onClick={() => router.push('/app/buku/update_cover/?id='+id)} />
+                      </Space>,
     },
   ];
 

@@ -41,12 +41,12 @@ export default function BukuUpdate() {
 
   const uploadFile = async(info) => {
     if (info.file.status !== 'uploading') {
-      //file dat
+      //file data
       const fileUpload = info.file.originFileObj;
 
-      //get file type (jpeg/png)
-      const fileType = info.file.type.split('/');
-      const fileName = Date.now()+'.'+fileType[1];
+      //rename file name using timestamp + extension
+      const fileExt = info.file.type.split('/');
+      const fileName = Date.now()+'.'+fileExt[1];
 
       //file path
       const filePath = 'buku/'+fileName;
