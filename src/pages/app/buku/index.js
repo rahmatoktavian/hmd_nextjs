@@ -81,9 +81,9 @@ export default function BukuIndex() {
       dataIndex: 'key',
       key: 'key',
       render: (id) => <>
-        <Button type="primary" icon={<EditOutlined />} onClick={() => router.push('/app/buku/update/?id='+id)} />
-        <Button type="primary" icon={<UploadOutlined />} onClick={() => router.push('/app/buku/update_cover/?id='+id)} style={{marginLeft:10}} />
-        </>,
+                        <Button type="primary" icon={<EditOutlined />} onClick={() => router.push('/app/buku/update/?id='+id)} />
+                        <Button type="primary" icon={<UploadOutlined />} onClick={() => router.push('/app/buku/update_cover/?id='+id)} style={{marginLeft:10}} />
+                      </>,
     },
   ];
 
