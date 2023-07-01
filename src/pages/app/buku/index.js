@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
-import { Button, Table } from 'antd';
-import { EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Table, Image } from 'antd';
+import { EditOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { supabase } from '../../../config/supabase';
 // import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
@@ -25,7 +25,7 @@ export default function BukuIndex() {
     //kategori(nama) : join kategori then select kategori.nama
     const { data, error } = await supabase
                               .from('buku')
-                              .select('id, judul, stok, kategori(nama)');
+                              .select('id, judul, stok, cover, kategori(nama)');
     
     //looping untuk reformat data
     let result = [];
@@ -35,6 +35,7 @@ export default function BukuIndex() {
         kategori_nama: row.kategori.nama,
         judul: row.judul,
         stok: row.stok,
+        cover: row.cover,
       })
     )
 
@@ -66,10 +67,23 @@ export default function BukuIndex() {
       defaultSortOrder: 'ascend'
     },
     {
+      title: 'Cover',
+      dataIndex: 'cover',
+      key: 'cover',
+      render: (cover) => cover &&
+                            <Image
+                            width={200}
+                            src={cover}
+                          />
+    },
+    {
       title: 'Action',
       dataIndex: 'key',
       key: 'key',
-      render: (text) => <Button type="primary" icon={<EditOutlined />} onClick={() => router.push('/app/buku/update/?id='+text)} />,
+      render: (id) => <>
+        <Button type="primary" icon={<EditOutlined />} onClick={() => router.push('/app/buku/update/?id='+id)} />
+        <Button type="primary" icon={<UploadOutlined />} onClick={() => router.push('/app/buku/update_cover/?id='+id)} style={{marginLeft:10}} />
+        </>,
     },
   ];
 

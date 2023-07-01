@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 import { Button, Table } from 'antd';
 import { EditOutlined, PlusOutlined, BookOutlined } from '@ant-design/icons';
-// import { supabase } from '../../../config/supabase';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { supabase } from '../../../config/supabase';
+import { useUser } from '@supabase/auth-helpers-react';
 
 export default function PeminjamanIndex() {
   //route for page movemenet
   const router = useRouter();
 
   //get user login
-  const supabase = createClientComponentClient()
+  const user = useUser()
 
   //state [stateName, function to change state data]
   const [tableData, setDataTable] = useState([]);
@@ -22,14 +22,11 @@ export default function PeminjamanIndex() {
 
   //get data using supabase API
   const getData = async() => {
-    const { data:supasession } = await supabase.auth.getSession();
-    const useremail = supasession.session.user.email;
-
     //kategori(nama) : join kategori then select kategori.nama
     const { data, error } = await supabase
                               .from('peminjaman')
                               .select('id, tanggal_pinjam, petugas!inner(nama), anggota!inner(nim,nama)')
-                              .eq('petugas.email', useremail);
+                              .eq('petugas.email', user.email);
 
     //looping untuk reformat data
     let result = [];
