@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Upload, Button, message } from 'antd';
-import { ArrowLeftOutlined, BellOutlined, UploadOutlined } from '@ant-design/icons';
+import { Upload, Button, message, Typography } from 'antd';
+import { ArrowLeftOutlined, UploadOutlined } from '@ant-design/icons';
 import { supabase } from '../../../config/supabase';
+import Title from 'antd/es/skeleton/Title';
 
 export default function BukuUpdate() {
   //calling message library
@@ -16,6 +17,9 @@ export default function BukuUpdate() {
 
   //state for kategori
   const [judul, setJudul] = useState('');
+
+  //text
+  const { Title } = Typography;
 
   //initial function (first function will run in this page)
   useEffect(() => {
@@ -32,17 +36,7 @@ export default function BukuUpdate() {
                               .eq('id', id)
                               .single();
                               
-    //insert data input & dropdown        
     setJudul(data.judul);
-  }
-
-  const beforeUpload = (info) => {
-    const fileTypeValid = info.type === 'image/jpeg' || info.type === 'image/png';
-    if (!fileTypeValid) {
-      messageApi.error('You can only upload JPG/PNG file!');
-    }
-
-    return fileTypeValid;
   }
 
   const uploadFile = async(info) => {
@@ -97,6 +91,9 @@ export default function BukuUpdate() {
       {messageApiDisplay}
 
       <Button onClick={() => router.push('/app/buku')} icon={<ArrowLeftOutlined />} style={{marginBottom:20}}>Back</Button>
+      <br />
+
+      <Title level={3}>{judul}</Title>
       <br />
 
       <Upload 
