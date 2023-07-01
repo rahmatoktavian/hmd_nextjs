@@ -28,7 +28,7 @@ export default function BukuUpdate() {
 
   //get choosen data
   const getDataDetail = async() => {
-
+    
     //select based on id
     const { data, error } = await supabase
                               .from('buku')
