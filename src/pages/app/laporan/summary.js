@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../../../config/supabase';
-import { Pie } from '@ant-design/plots';
+import dynamic from 'next/dynamic'
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export default function LaporanSummary() {
   //data state
-  const [data, setData] = useState([]);
+  const [options, setOption] = useState ({});
+  const [series, setSeries] = useState([]);
+  const [labels, setLabels] = useState([]);
 
   //initial function (first function will run in this page)
   useEffect(() => {
@@ -15,50 +18,30 @@ export default function LaporanSummary() {
     //calling stored procedure (rpc)
     const { data, error } = await supabase.rpc('rekap_buku');
     
-    //set state chartdata
-    setData(data);
+    if(data) {
+      //loop data to fill state
+      let seriesData = [];
+      let labelsData = [];
+      data.map(row => {
+        seriesData.push(row.total_buku)
+        labelsData.push(row.kategori_nama)
+      })
+      
+      //set state chartdata
+      setSeries(seriesData);
+      setOption({ labels: labelsData });
+    }
   }
 
-  // original chart data
-  // const data = [
-  //   {
-  //     type: 'Science',
-  //     value: 27,
-  //   },
-  //   {
-  //     type: 'Social',
-  //     value: 25,
-  //   },
-  //   {
-  //     type: 'Language',
-  //     value: 18,
-  //   },
-  // ];
-
-  const config = {
-    data,
-    appendPadding: 10,
-
-    //change name type & value based from stored procedure (rpc)
-    angleField: 'total_buku',
-    colorField: 'kategori_nama',
-
-    radius: 0.9,
-    label: {
-      type: 'inner',
-      offset: '-30%',
-      content: ({ percent }) => `${(percent * 100).toFixed(0)}%`,
-      style: {
-        fontSize: 14,
-        textAlign: 'center',
-      },
-    },
-  };
-  
   //display data
   return (
     <>
-      <Pie {...config} />
+      <Chart
+          options={options}
+          series={series}
+          type="pie"
+          width="500"
+        />
     </>
   )
 }

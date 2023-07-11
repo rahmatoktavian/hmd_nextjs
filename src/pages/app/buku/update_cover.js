@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { Upload, Button, message, Typography } from 'antd';
 import { ArrowLeftOutlined, UploadOutlined } from '@ant-design/icons';
 import { supabase } from '../../../config/supabase';
-import Title from 'antd/es/skeleton/Title';
 
 export default function BukuUpdate() {
   //calling message library
